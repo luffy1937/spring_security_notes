@@ -117,6 +117,15 @@ Set-Cookie: JSESSIONID=randomid; Domain=bank.example.com; Secure; HttpOnly; Same
 
 `SameSite`的有效值如下：
 + `Strict` 规定任何从`same-site`过来的请求都要带 cookie。否则 不能带cookie;
-+ `Lax` 规定任何从`same-site`或者`top-level navigations`的幂等请求要带cookie。否则不能带cookie；
++ `Lax` 规定任何来自`same-site`或者`top-level navigations`的幂等请求要带cookie。否则不能带cookie；
+
+还是以银行站点的网站为例，因为设置了`SameSite`,从银行网页发出的request，浏览器会填充 JSESSIONID cookie，但是从恶意站点发出的request，浏览器将不再填充cookie。
+
+`SameSite`机制只在新版浏览器中支持;  
+
+
+# 什么时候使用 CSRF 防御机制
+
+建议普通用户通过浏览器发送http request时使用；非浏览器客户端可以disable CSRF 防御机制。
 
 
