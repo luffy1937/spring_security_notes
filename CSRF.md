@@ -106,5 +106,17 @@ CSRF token被放在query参数中传递，字段是`_csrf`。
 
 # `SameSite Attribute`
 
+新兴的防御CSRF 攻击的方法是 cookies 中放一个 `SameSite Attribute`。 服务端可以在设置cookie时指定`SameSite`属性来表明外部站点不要发送cookie。
+
+> 这个方案不是 spring security来支持的，因为它不直接控制session cookie的创建。 在基于servlet的应用中，由spring session支持`SameSite`; 在WebFlux的应用中由 spring framework的`CookieWebSessionIdResolver`支持
+
+带有`SameSite`的http response header如下：
+```text
+Set-Cookie: JSESSIONID=randomid; Domain=bank.example.com; Secure; HttpOnly; SameSite=Lax
+```
+
+`SameSite`的有效值如下：
++ `Strict` 规定任何从`same-site`过来的请求都要带 cookie。否则 不能带cookie;
++ `Lax` 规定任何从`same-site`或者`top-level navigations`的幂等请求要带cookie。否则不能带cookie；
 
 
